@@ -1,5 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import CinematicHeroBackdrop from "@/components/home/CinematicHeroBackdrop";
+import Navbar from "@/components/Navbar/navbar";
+import PortfolioProviderWrapper from "@/components/PortfolioProvider";
+import ThemeInit from "@/components/ThemeInit";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,9 +24,17 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} theme-light px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="relative flex min-h-dvh flex-col overflow-x-hidden overflow-y-auto">
+        <ThemeInit />
+        <CinematicHeroBackdrop />
+        <Navbar />
+        <PortfolioProviderWrapper>
+          <main className="relative z-10 flex min-h-0 flex-1 flex-col">{children}</main>
+        </PortfolioProviderWrapper>
+      </body>
     </html>
   );
 }

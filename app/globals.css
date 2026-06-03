@@ -1,26 +1,365 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html.theme-dark {
+  --palette-black: #141414;
+  --palette-peach: #F0CDB9;
+  --palette-brown: #813E21;
+  --palette-light-brown: #B47E65;
+  --palette-terra: #7b3f24;
+  --scheme-canvas: var(--palette-black);
+  --scheme-surface: var(--palette-black);
+  --scheme-heading: var(--palette-peach);
+  --scheme-subheading: var(--palette-light-brown);
+  --scheme-body: var(--palette-light-brown);
+  --scheme-body-muted: var(--palette-peach);
+  --scheme-accent: var(--palette-brown);
+  --scheme-accent-2: var(--palette-terra);
+  --scheme-on-accent: var(--palette-peach);
+
+  --background: var(--scheme-canvas);
+  --foreground: var(--scheme-body);
+
+  --hero-vignette: radial-gradient(ellipse 85% 70% at 50% 38%,
+      transparent 0%,
+      color-mix(in srgb, var(--scheme-heading) 10%, transparent) 52%,
+      color-mix(in srgb, var(--scheme-heading) 26%, transparent) 100%);
+  --hero-fade-vertical: linear-gradient(to bottom,
+      color-mix(in srgb, var(--scheme-canvas) 45%, transparent),
+      transparent 40%,
+      color-mix(in srgb, var(--scheme-canvas) 88%, transparent));
+
+  --shadow-text-lift:
+    0 1px 2px color-mix(in srgb, var(--scheme-heading) 22%, transparent),
+    0 2px 22px color-mix(in srgb, var(--scheme-heading) 10%, transparent);
+
+  color-scheme: dark;
+}
+
+html.theme-light {
+  --palette-white: #ffffff;
+  --palette-cream: #faf8f6;
+  --palette-mist: #f3f0ec;
+  --palette-ink: #1c1917;
+  --palette-black: #141414;
+  --palette-peach: #f0cdb9;
+  --palette-brown: #6b3d2e;
+  --palette-light-brown: #b47e65;
+  --palette-dust: #a89086;
+  --palette-terra: #7a4a32;
+
+  --scheme-canvas: var(--palette-cream);
+  --scheme-surface: var(--palette-cream);
+  --scheme-heading: var(--palette-ink);
+  --scheme-subheading: var(--palette-light-brown);
+  --scheme-body: var(--palette-ink);
+  --scheme-body-muted: var(--palette-light-brown);
+  --scheme-accent: var(--palette-brown);
+  --scheme-accent-2: var(--palette-terra);
+  --scheme-on-accent: var(--palette-peach);
+
+  --background: var(--scheme-canvas);
+  --foreground: var(--scheme-body);
+
+  --hero-vignette: radial-gradient(ellipse 85% 70% at 50% 38%,
+      transparent 0%,
+      color-mix(in srgb, var(--scheme-heading) 10%, transparent) 52%,
+      color-mix(in srgb, var(--scheme-heading) 26%, transparent) 100%);
+  --hero-fade-vertical: linear-gradient(to bottom,
+      color-mix(in srgb, var(--scheme-canvas) 45%, transparent),
+      transparent 40%,
+      color-mix(in srgb, var(--scheme-canvas) 88%, transparent));
+
+  --shadow-text-lift:
+    0 1px 2px color-mix(in srgb, var(--scheme-heading) 22%, transparent),
+    0 2px 22px color-mix(in srgb, var(--scheme-heading) 10%, transparent);
+
+  color-scheme: light;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-scheme-canvas: var(--scheme-canvas);
+  --color-scheme-surface: var(--scheme-surface);
+  --color-scheme-heading: var(--scheme-heading);
+  --color-scheme-subheading: var(--scheme-subheading);
+  --color-scheme-body: var(--scheme-body);
+  --color-scheme-body-muted: var(--scheme-body-muted);
+  --color-scheme-accent: var(--scheme-accent);
+  --color-scheme-accent-2: var(--scheme-accent-2);
+  --color-scheme-on-accent: var(--scheme-on-accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.app-grid-layer {
+  background-image: linear-gradient(to right,
+      color-mix(in srgb, var(--scheme-accent) 9%, transparent) 1px,
+      transparent 1px),
+    linear-gradient(to bottom,
+      color-mix(in srgb, var(--scheme-accent-2) 7%, transparent) 1px,
+      transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.55;
+  mask-image: radial-gradient(ellipse 68% 62% at 50% 42%, black 22%, transparent 74%);
+}
+
+::selection {
+  background-color: var(--scheme-accent);
+  color: var(--scheme-on-accent);
+}
+
+::-moz-selection {
+  background-color: var(--scheme-accent);
+  color: var(--scheme-on-accent);
+}
+
+/* —— Home hero: animated backdrop + slide-in reveals —— */
+@keyframes home-blob-a {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate(8%, 6%) scale(1.12);
+    opacity: 0.72;
+  }
+}
+
+@keyframes home-blob-b {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.05);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translate(-10%, -8%) scale(1.08);
+    opacity: 0.55;
+  }
+}
+
+@keyframes home-blob-c {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.28;
+  }
+
+  50% {
+    transform: translate(-4%, 10%) rotate(-8deg);
+    opacity: 0.42;
+  }
+}
+
+@keyframes home-grid-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-18px, -18px, 0);
+  }
+}
+
+@keyframes home-shine {
+  0% {
+    transform: translateX(-120%) skewX(-12deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.06;
+  }
+
+  40% {
+    transform: translateX(120%) skewX(-12deg);
+    opacity: 0.08;
+  }
+
+  100% {
+    transform: translateX(120%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+
+@keyframes home-slide-from-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-2rem, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes home-slide-from-right {
+  from {
+    opacity: 0;
+    transform: translate3d(2rem, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes home-slide-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.home-bg-blob-a {
+  animation: home-blob-a 20s ease-in-out infinite;
+}
+
+.home-bg-blob-b {
+  animation: home-blob-b 26s ease-in-out infinite;
+}
+
+.home-bg-blob-c {
+  animation: home-blob-c 18s ease-in-out infinite;
+}
+
+.home-bg-grid {
+  animation: home-grid-drift 48s linear infinite;
+}
+
+.home-bg-shine {
+  animation: home-shine 11s ease-in-out infinite;
+}
+
+.home-reveal-left {
+  opacity: 0;
+  animation: home-slide-from-left 0.82s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.home-reveal-right {
+  opacity: 0;
+  animation: home-slide-from-right 0.82s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.home-reveal-up {
+  opacity: 0;
+  animation: home-slide-up 0.88s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.home-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.home-delay-2 {
+  animation-delay: 0.18s;
+}
+
+.home-delay-3 {
+  animation-delay: 0.28s;
+}
+
+.home-delay-4 {
+  animation-delay: 0.38s;
+}
+
+.home-delay-5 {
+  animation-delay: 0.48s;
+}
+
+.home-delay-6 {
+  animation-delay: 0.58s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .home-bg-blob-a,
+  .home-bg-blob-b,
+  .home-bg-blob-c,
+  .home-bg-grid,
+  .home-bg-shine,
+  .home-reveal-left,
+  .home-reveal-right,
+  .home-reveal-up,
+  .page-reveal-down {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* —— Inner pages: text reveals from top → down —— */
+@keyframes page-reveal-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -1.25rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-reveal-down {
+  opacity: 0;
+  animation: page-reveal-down 0.82s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.page-delay-1 {
+  animation-delay: 0.06s;
+}
+
+.page-delay-2 {
+  animation-delay: 0.12s;
+}
+
+.page-delay-3 {
+  animation-delay: 0.18s;
+}
+
+.page-delay-4 {
+  animation-delay: 0.24s;
+}
+
+.page-delay-5 {
+  animation-delay: 0.3s;
+}
+
+.page-delay-6 {
+  animation-delay: 0.36s;
+}
+
+.page-delay-7 {
+  animation-delay: 0.42s;
+}
+
+.page-delay-8 {
+  animation-delay: 0.48s;
+}
+
+.page-delay-9 {
+  animation-delay: 0.54s;
+}
+
+.page-delay-10 {
+  animation-delay: 0.6s;
 }

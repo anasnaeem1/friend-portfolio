@@ -1,65 +1,65 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+
+import { usePortfolio } from "@/context/PortfolioContext";
+
+const btnBase =
+  "inline-flex min-h-11 items-center justify-center rounded-md px-6 text-[0.7rem] font-bold uppercase tracking-[0.16em] transition-[transform,box-shadow,background-color,color,border-color] duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scheme-accent focus-visible:ring-offset-2 focus-visible:ring-offset-scheme-canvas";
+
+const primaryCtaShadow =
+  "shadow-[0_12px_40px_-12px_color-mix(in_srgb,var(--scheme-accent)_65%,transparent)] hover:shadow-[0_18px_44px_-10px_color-mix(in_srgb,var(--scheme-accent)_55%,transparent)]";
 
 export default function Home() {
+  const { content, loading } = usePortfolio();
+  const home = content.home;
+
+  if (loading) {
+    return (
+      <div className="relative flex min-h-[calc(100svh-5.25rem)] flex-1 items-center justify-center text-scheme-body-muted">
+        Loading…
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="relative flex min-h-[calc(100svh-5.25rem)] w-full flex-1 flex-col overflow-hidden bg-transparent text-scheme-body md:min-h-[calc(100svh-5.5rem)]">
+      <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-5xl flex-1 flex-col justify-center px-5 py-10 md:px-10 md:py-14">
+        <section className="w-full space-y-5 md:space-y-6">
+          <div className="home-reveal-up inline-block rounded-sm border border-scheme-accent/35 bg-scheme-canvas/35 px-4 py-3 md:px-5 md:py-3.5">
+            <h1 className="text-5xl font-bold leading-[0.92] tracking-tight text-scheme-heading md:text-6xl lg:text-7xl">
+              {home.greeting}
+            </h1>
+          </div>
+
+          <h2 className="home-reveal-up home-delay-1 text-2xl font-light tracking-tight text-scheme-heading md:text-3xl lg:text-4xl">
+            I&apos;m {home.name}
+          </h2>
+
+          <p className="home-reveal-up home-delay-2 max-w-xl text-pretty text-[0.98rem] font-normal leading-relaxed text-scheme-body/95 md:text-lg md:leading-relaxed">
+            <span className="block">{home.intro}</span>
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+          <p className="home-reveal-up home-delay-3 max-w-xl text-sm leading-relaxed text-scheme-body-muted/95 md:text-[0.98rem] md:leading-[1.75]">
+            {home.bio}
+          </p>
+
+          <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:gap-4 sm:pt-3">
+            <Link
+              href={home.primaryHref}
+              className={`home-reveal-up home-delay-4 ${btnBase} border border-scheme-accent/50 bg-scheme-accent/90 text-scheme-on-accent ${primaryCtaShadow} hover:-translate-y-0.5 hover:bg-scheme-accent`}
+            >
+              {home.primaryCta}
+            </Link>
+            <Link
+              href={home.secondaryHref}
+              className={`home-reveal-up home-delay-6 ${btnBase} border border-scheme-heading/25 bg-scheme-canvas/50 text-scheme-body/95 backdrop-blur-sm hover:-translate-y-0.5 hover:border-scheme-heading/45 hover:bg-scheme-canvas/70`}
+            >
+              {home.secondaryCta}
+            </Link>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
