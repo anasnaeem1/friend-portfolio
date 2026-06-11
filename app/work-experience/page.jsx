@@ -20,6 +20,8 @@ const pagerBtn =
   "rounded-sm border border-scheme-accent/50 px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-wide text-scheme-body transition-colors hover:bg-scheme-accent/25 disabled:pointer-events-none disabled:opacity-35";
 
 function getExperienceEntries(workExperience) {
+  if (!workExperience) return [];
+
   if (workExperience.entries?.length) {
     return workExperience.entries.map((entry) => ({
       id: entry.id,
@@ -33,10 +35,10 @@ function getExperienceEntries(workExperience) {
   return [
     {
       id: "main",
-      period: workExperience.period,
-      headline: [workExperience.role],
+      period: workExperience.period || "",
+      headline: [workExperience.role || ""],
       descriptionLead: "",
-      descriptionRest: workExperience.description,
+      descriptionRest: workExperience.description || "",
     },
   ];
 }
@@ -133,7 +135,7 @@ function ExperiencePageFooter({ showPager }) {
 
 export default function WorkExperiencePage() {
   const { content, loading } = usePortfolio();
-  const workExperience = content.workExperience;
+  const workExperience = content?.workExperience;
 
   const allEntries = useMemo(
     () => getExperienceEntries(workExperience),
