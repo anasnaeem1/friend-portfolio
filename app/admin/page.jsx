@@ -252,7 +252,7 @@ export default function AdminPage() {
                       value={project.href ?? ""}
                       placeholder="https://..."
                       onChange={(e) => setProject(index, "href", e.target.value)}
-                    />a
+                    />
                   </div>
                   <div>
                     <label className={label} htmlFor={`p${index}-image`}>Image URL</label>

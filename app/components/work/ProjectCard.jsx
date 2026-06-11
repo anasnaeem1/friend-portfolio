@@ -21,7 +21,7 @@ export default function ProjectCard({ title, description, href, imageSrc }) {
   rel="noopener noreferrer"
   className="flex h-full min-h-0 flex-col outline-none ring-offset-2 ring-offset-scheme-canvas focus-visible:ring-2 focus-visible:ring-scheme-accent"
 >
-        <div className="relative aspect-[5/5.5] w-full shrink-0 overflow-hidden bg-scheme-canvas">
+        <div className="relative h-[160px] sm:h-[180px] md:h-[200px] w-full shrink-0 overflow-hidden bg-scheme-canvas">
         <Image
             src={src}
             alt={title}

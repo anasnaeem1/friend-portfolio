@@ -22,25 +22,18 @@ const pagerBtn =
 function getExperienceEntries(workExperience) {
   if (!workExperience) return [];
 
-  if (workExperience.entries?.length) {
-    return workExperience.entries.map((entry) => ({
-      id: entry.id,
+  // your actual array
+  if (workExperience.workExperience?.length) {
+    return workExperience.workExperience.map((entry, index) => ({
+      id: entry.id || index,
       period: entry.period,
-      headline: Array.isArray(entry.headline) ? entry.headline : [entry.headline],
-      descriptionLead: entry.descriptionLead || "",
-      descriptionRest: entry.descriptionRest || entry.description || "",
+      headline: Array.isArray(entry.role) ? entry.role : [entry.role],
+      descriptionLead: "",
+      descriptionRest: entry.description || "",
     }));
   }
 
-  return [
-    {
-      id: "main",
-      period: workExperience.period || "",
-      headline: [workExperience.role || ""],
-      descriptionLead: "",
-      descriptionRest: workExperience.description || "",
-    },
-  ];
+  return [];
 }
 
 function ExperiencePageHeader({ heading }) {
@@ -135,7 +128,7 @@ function ExperiencePageFooter({ showPager }) {
 
 export default function WorkExperiencePage() {
   const { content, loading } = usePortfolio();
-  const workExperience = content?.workExperience;
+  const workExperience = content?.Experience;
 
   const allEntries = useMemo(
     () => getExperienceEntries(workExperience),
@@ -153,18 +146,18 @@ export default function WorkExperiencePage() {
     return allEntries.slice(start, start + PAGE_SIZE);
   }, [page, allEntries, showPager]);
 
-  if (loading) {
-    return (
-      <div className="relative flex flex-1 items-center justify-center py-20 text-scheme-body-muted">
-        Loading…
-      </div>
-    );
-  }
+if (loading || !workExperience) {
+  return (
+    <div className="relative flex flex-1 items-center justify-center py-20 text-scheme-body-muted">
+      Loading…
+    </div>
+  );
+}
 
   return (
     <div className="relative flex h-full max-h-[calc(100svh-5.5rem)] min-h-0 w-full flex-1 flex-col items-center justify-center bg-transparent px-4 text-scheme-body md:max-h-[calc(100svh-5.75rem)]">
       <div className="relative z-10 flex w-full max-w-3xl flex-col items-center justify-center">
-        <ExperiencePageHeader heading={workExperience.heading} />
+        <ExperiencePageHeader heading={workExperience?.heading || ""} />
 
         <ol
           className={`relative mx-auto w-full max-w-xl list-none pl-2 text-left sm:pl-4 md:max-w-2xl ${reveal.step2}`}

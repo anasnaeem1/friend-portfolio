@@ -24,10 +24,10 @@ export default function Home() {
 
   return (
     <div className="relative flex min-h-[calc(100svh-5.25rem)] w-full flex-1 flex-col overflow-hidden bg-transparent text-scheme-body md:min-h-[calc(100svh-5.5rem)]">
-      <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-5xl flex-1 flex-col justify-center px-5 py-10 md:px-10 md:py-14">
+      <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-5xl flex-1 flex-col justify-center px-5 md:px-10 py-10">
         <section className="w-full space-y-5 md:space-y-6">
           <div className="home-reveal-up inline-block rounded-sm border border-scheme-accent/35 bg-scheme-canvas/35 px-4 py-3 md:px-5 md:py-3.5">
-            <h1 className="text-5xl font-bold leading-[0.92] tracking-tight text-scheme-heading md:text-6xl lg:text-7xl">
+            <h1 className="text-5xl font-bold leading-[0.92] tracking-tight text-scheme-heading md:text-6xl lg:text-6xl">
               {home.greeting}
             </h1>
           </div>
