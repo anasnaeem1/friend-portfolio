@@ -11,7 +11,7 @@ const schema = new mongoose.Schema(
     home: { type: Object, required: true },
     work: { type: Object, required: true },
     about: { type: Object, required: true },
-    workExperience: { type: Object, required: true },
+    Experience: { type: Object, required: true },
   },
   { collection: COLLECTION_NAME, timestamps: true }
 );
@@ -51,7 +51,7 @@ schema.methods.toContent = function toContent() {
     home: this.home,
     work: this.work,
     about: this.about,
-    workExperience: this.workExperience,
+    Experience: this.Experience,
   };
 };
 

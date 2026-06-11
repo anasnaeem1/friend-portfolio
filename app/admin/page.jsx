@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { usePortfolio } from "@/context/PortfolioContext";
 import { PAGES } from "@/lib/portfolioContent";
@@ -18,11 +17,15 @@ export default function AdminPage() {
   const [page, setPage] = useState("home");
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState(null);
-
+  const [defaultProjects, setDefaultProjects] = useState(null);
   const home = content.home;
   const work = content.work;
   const about = content.about;
-  const experience = content.workExperience;
+  const experience = content.Experience;
+
+  useEffect(() => {
+    setDefaultProjects(content);
+  }, [0]);
 
   function setHome(field, value) {
     setContent((c) => ({ ...c, home: { ...c.home, [field]: value } }));
@@ -52,11 +55,24 @@ export default function AdminPage() {
     setSaved(false);
   }
 
-  function setExperience(field, value) {
-    setContent((c) => ({ ...c, workExperience: { ...c.workExperience, [field]: value } }));
-    setSaved(false);
+  function setExperience(index, field, value) {
+    setContent((c) => {
+      const updated = [...(c.Experience.workExperience || [])];
+  
+      updated[index] = {
+        ...updated[index],
+        [field]: value,
+      };
+  
+      return {
+        ...c,
+        Experience: {
+          ...c.Experience,
+          workExperience: updated,
+        },
+      };
+    });
   }
-
   async function handleSave(e) {
     e.preventDefault();
     setError(null);
@@ -75,6 +91,12 @@ export default function AdminPage() {
       setError("Could not save to database");
       setSaved(false);
     }
+  }
+
+  function handleReset(defaultProjects) {
+    setContent(defaultProjects);
+    setSaved(false);
+    setError(null);
   }
 
   const pageLabel = PAGES.find((p) => p.id === page)?.label ?? "Home";
@@ -161,11 +183,47 @@ export default function AdminPage() {
                 <label className={label} htmlFor="heading">Heading</label>
                 <input id="heading" className={input} value={work.heading} onChange={(e) => setWork("heading", e.target.value)} />
               </div>
+              <button
+                type="button"
+                className="cursor-pointer text-[0.65rem] font-semibold uppercase tracking-wider text-scheme-heading/80"
+                onClick={() =>
+                  setContent((c) => ({
+                    ...c,
+                    work: {
+                      ...c.work,
+                      projects: [
+                        ...(c.work.projects || []),
+                        {
+                          id: crypto.randomUUID(),
+                          title: "",
+                          description: "",
+                          href: "#",
+                          imageUrl: "",
+                        },
+                      ],
+                    },
+                  }))
+                }
+              >
+                Add project
+              </button>
               {work.projects.map((project, index) => (
                 <div key={project.id} className="space-y-4 border-t border-scheme-accent/20 pt-4">
-                  <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-scheme-heading/80">
-                    Project {index + 1}
-                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-scheme-heading/80">
+                      Project {index + 1}
+                    </p>
+                    <button
+                      type="button"
+                      className="cursor-pointer text-[0.65rem] font-semibold uppercase tracking-wider text-scheme-heading/80"
+                      onClick={() =>
+                        setWork("projects", work.projects.filter((_, i) => i !== index))
+                      }
+                    >
+                      Delete project
+                    </button>
+                  </div>
+
                   <div>
                     <label className={label} htmlFor={`p${index}-title`}>Title</label>
                     <input
@@ -186,13 +244,15 @@ export default function AdminPage() {
                     />
                   </div>
                   <div>
-                    <label className={label} htmlFor={`p${index}-href`}>Link</label>
+                    <label className={label} htmlFor={`p${index}-pdf`}>Link</label>
                     <input
-                      id={`p${index}-href`}
+                      id={`p${index}-link`}
+                      type="url"
                       className={input}
-                      value={project.href}
+                      value={project.href ?? ""}
+                      placeholder="https://..."
                       onChange={(e) => setProject(index, "href", e.target.value)}
-                    />
+                    />a
                   </div>
                   <div>
                     <label className={label} htmlFor={`p${index}-image`}>Image URL</label>
@@ -243,34 +303,117 @@ export default function AdminPage() {
             </div>
           )}
 
-          {page === "workExperience" && (
+          {page === "Experience" && (
             <div className={box}>
               <div>
                 <label className={label} htmlFor="expHeading">Page heading</label>
                 <input id="expHeading" className={input} value={experience.heading} onChange={(e) => setExperience("heading", e.target.value)} />
               </div>
-              <div>
-                <label className={label} htmlFor="period">Period</label>
-                <input id="period" className={input} value={experience.period} onChange={(e) => setExperience("period", e.target.value)} />
-              </div>
-              <div>
-                <label className={label} htmlFor="role">Role / company</label>
-                <input id="role" className={input} value={experience.role} onChange={(e) => setExperience("role", e.target.value)} />
-              </div>
-              <div>
-                <label className={label} htmlFor="description">Description</label>
-                <textarea id="description" rows={4} className={input} value={experience.description} onChange={(e) => setExperience("description", e.target.value)} />
-              </div>
+              <button
+                type="button"
+                className="cursor-pointer text-[0.65rem] font-semibold uppercase tracking-wider text-scheme-heading/80"
+                onClick={() =>
+                  setContent((c) => ({
+                    ...c,
+                    Experience: {
+                      ...c.Experience,
+                      workExperience: [
+                        ...(c.Experience.workExperience || []),
+                        {
+                          period: "",
+                          role: "",
+                          description: "",
+                        },
+                      ],
+                    },
+                  }))
+                }
+              >
+                Add Experience
+              </button>
+
+              {experience.workExperience.map((item, index) => (
+                <div key={index} className={box}>
+
+                  <div className="flex items-center justify-between">
+                    <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-scheme-heading/80">
+                      Experience {index + 1}
+                    </p>
+
+                    <button
+                      type="button"
+                      className="cursor-pointer text-[0.65rem] font-semibold uppercase tracking-wider text-scheme-heading/80 hover:text-red-500 transition-colors"
+                      onClick={() =>
+                        setContent((c) => ({
+                          ...c,
+                          Experience: {
+                            ...c.Experience,
+                            workExperience: (c.Experience.workExperience || []).filter(
+                              (_, i) => i !== index
+                            ),
+                          },
+                        }))
+                      }
+                    >
+                      Delete experience
+                    </button>
+                  </div>
+
+                  <div>
+                    <label className={label}>Period</label>
+                    <input
+                      className={input}
+                      value={item.period}
+                      onChange={(e) =>
+                        setExperience(index, "period", e.target.value)
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <label className={label}>Role / company</label>
+                    <input
+                      className={input}
+                      value={item.role}
+                      onChange={(e) =>
+                        setExperience(index, "role", e.target.value)
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <label className={label}>Description</label>
+                    <textarea
+                      rows={4}
+                      className={input}
+                      value={item.description}
+                      onChange={(e) =>
+                        setExperience(index, "description", e.target.value)
+                      }
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-6 rounded-sm border border-scheme-accent/50 bg-scheme-accent/90 px-5 py-2.5 text-[0.65rem] font-bold uppercase tracking-wide text-scheme-on-accent hover:bg-scheme-accent disabled:opacity-40"
-          >
-            Save
-          </button>
+          <div className="mt-6 flex items-center gap-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-6 rounded-sm border border-scheme-accent/50 bg-scheme-accent/90 px-5 py-2.5 text-[0.65rem] font-bold uppercase tracking-wide text-scheme-on-accent hover:bg-scheme-accent disabled:opacity-40"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              onClick={() => handleReset(defaultProjects)}
+              disabled={loading}
+              className="mt-6 rounded-sm border border-scheme-accent/50 bg-scheme-accent/90 px-5 py-2.5 text-[0.65rem] font-bold uppercase tracking-wide text-scheme-on-accent hover:bg-scheme-accent disabled:opacity-40"
+            >
+              Reset
+            </button>
+          </div>
           {saved ? (
             <p className="mt-3 text-[0.75rem] text-scheme-accent">Saved to database</p>
           ) : null}

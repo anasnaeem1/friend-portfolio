@@ -1,21 +1,33 @@
+"use client";
+import { dummyImage } from "../../../app/work/constants";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function ProjectCard({ title, description, href, imageSrc }) {
   const safeHref = href && href !== "" ? href : "#";
+  const src =
+  imageSrc?.startsWith("http") &&
+  /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(imageSrc)
+    ? imageSrc
+    : dummyImage;
 
   return (
+    
     <article className="group flex max-w-[320px] flex-col overflow-hidden rounded-xl border border-scheme-accent/15 bg-scheme-surface/60 transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-scheme-accent/35 hover:shadow-[0_28px_56px_-20px_color-mix(in_srgb,var(--scheme-accent)_45%,transparent),0_0_0_1px_color-mix(in_srgb,var(--scheme-heading)_6%,transparent)_inset]">
-      <Link
-        href={safeHref}
-        className="flex h-full min-h-0 flex-col outline-none ring-offset-2 ring-offset-scheme-canvas focus-visible:ring-2 focus-visible:ring-scheme-accent"
-      >
+     <Link
+  href={safeHref}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex h-full min-h-0 flex-col outline-none ring-offset-2 ring-offset-scheme-canvas focus-visible:ring-2 focus-visible:ring-scheme-accent"
+>
         <div className="relative aspect-[5/5.5] w-full shrink-0 overflow-hidden bg-scheme-canvas">
-          <Image
-            src={imageSrc}
+        <Image
+            src={src}
             alt={title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            onError={() => setSrc(dummyImage)}
             className="object-cover transition duration-500 ease-out group-hover:scale-[1.04]"
           />
           <div

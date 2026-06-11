@@ -2,18 +2,18 @@ export const PAGES = [
   { id: "home", label: "Home" },
   { id: "work", label: "Work" },
   { id: "about", label: "About" },
-  { id: "workExperience", label: "Experience" },
+  { id: "Experience", label: "Experience" },
 ];
 
 /** Default values — matches models/PortfolioContent.js */
 export const defaultContent = {
   home: {
     greeting: "Hello,",
-    name: "Bassant",
+    name: "Umme Habiba",
     intro:
-      "Creative Arts student, with a background in Marketing and advertising and 2 years of experience in campaigning creation within a college setting",
+      "I am a Creative Arts student, with a background in Marketing, PR, and Advertising. I gained all of the skills necessary to create integrated Marketing campaigns from 2 years of experience within a college setting.",
     bio:
-      "I craft refined visuals and creative Advertising and Marketing campaigns that merge aesthetics with strategy, helping brands communicate with clarity and impact. Cohesive identities, compelling content, and visually intelligent solutions that elevate presence and leave a lasting impression.",
+      "I craft refined visuals and creative Advertising and Marketing campaigns that merge aesthetics with strategy, helping brands communicate with clarity and impact. I have created cohesive identities, compelling content, visually aesthetic and out of the box solutions that elevate presence and leave a lasting impression for a successful outcome to please my clients",
     primaryCta: "View work",
     primaryHref: "/work",
     secondaryCta: "About",
@@ -21,12 +21,12 @@ export const defaultContent = {
   },
   work: {
     categoryLabel: "My work",
-    heading: "Marketing",
+    heading: "Marketing - Advertising and PR Campaigns",
     projects: [
       {
         id: "p1",
-        title: "Campaign identity",
-        description: "Launch visuals and social system for a summer product drop.",
+        title: "Fully Integrated Marketing Campaign for St Andrews First Aid",
+        description: "Developed an integrated advertising and PR campaign for SAFA (St Andrews First Aid) focused on increasing first aid awareness and training participation within Scotland’s minority communities. The “Safe Spaces” campaign combined community-based workshops, influencer partnerships, social media, outdoor advertising, and PR outreach to make lifesaving skills more accessible and inclusive.",
         href: "#",
         imageUrl:
           "https://res.cloudinary.com/datcr1zua/image/upload/v1773703333/samples/woman-on-a-football-field.jpg",
@@ -44,17 +44,26 @@ export const defaultContent = {
   about: {
     skillsHeading: "Education & skills",
     contactsHeading: "Contacts",
-    education: "B.A. Graphic Design — Demo Arts Institute · 2020–2024\nCreative Media certification — Demo College · 2019",
-    skills: "Communication\nPublic Speaking\nTeam working\nCreativity\nDigital media",
+    education: "HNC Marketing Communications at City of Glasgow College - 2024 to 2025 HND Marketing, Advertising and Public Relations at City of Glasgow College - 2025 to 2026",
+    skills: "Communication\nPublic Speaking\nTeam working\nOrganisation\nDigital media\nTime Management\nCritical Thinking\nBudgeting",
     contactLabel: "Email",
-    contactValue: "portfolio.demo@example.com",
-    contactHref: "mailto:portfolio.demo@example.com",
+    contactValue: "UmmeHMohammed987@gmail.com",
+    contactHref: "mailto:UmmeHMohammed987@gmail.com",
   },
-  workExperience: {
+  Experience: {
     heading: "Work experience",
-    period: "2024 – Now",
-    role: "SOLIS – Graphic Designer & Project Manager (Remotely)",
-    description:
-      "Leading creative designs & projects, managing timelines, and handling client communication.",
-  },
+    workExperience: [
+      {
+        period: "2026",
+        role: "Glasgow Chamber of Commerce - YATTLE",
+        description:
+          "Creating successful social media content for TikTok and Instagram to reach 16-25 year olds in Scotland looking for apprenticeships.",
+      },
+      {
+        period: "2024 – Now",
+        role: "SOLIS – Graphic Designer & Project Manager (Remotely)",
+        description:
+          "Leading creative designs & projects, managing timelines, and handling client communication.",
+      }]
+  }
 };

@@ -35,9 +35,13 @@ function WorkPageIntro({ categoryLabel, heading }) {
 function WorkProjectGrid({ items }) {
   return (
     <ul
-      className={`grid w-full list-none grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 md:grid-cols-3 md:grid-rows-1 md:items-stretch md:gap-8 lg:gap-10 ${reveal.step2}`}
-      aria-label="Project grid"
-    >
+    className={`grid w-full list-none justify-center gap-6
+    grid-cols-1 place-items-center
+    sm:grid-cols-2 sm:place-items-stretch
+    md:grid-cols-3
+    lg:gap-10 ${reveal.step2}`}
+    aria-label="Project grid"
+  >
       {items.map((project) => (
         <li key={project.id} className="flex h-full min-h-0 min-w-0">
           <ProjectCard
