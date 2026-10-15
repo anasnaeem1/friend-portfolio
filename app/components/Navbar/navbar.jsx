@@ -71,7 +71,7 @@ export default function Navbar() {
           className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-scheme-heading/95 transition-colors hover:text-scheme-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scheme-accent-2 focus-visible:ring-offset-2 focus-visible:ring-offset-scheme-canvas md:hidden"
           onClick={() => setMenuOpen(false)}
         >
-          Bassant
+          Umme Habiba
         </Link>
 
         {/* Desktop links + theme */}
